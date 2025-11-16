@@ -1,0 +1,28 @@
+# --- Python virtual environment ---
+myenv/
+venv/
+.env/
+
+# --- Environment & secrets ---
+.env
+*.env
+__pycache__/
+*.pyc
+
+# --- Local data files ---
+data/raw/
+data/*.csv
+
+# --- Logs ---
+*.log
+logs/
+
+# --- OS / Editor files ---
+.DS_Store
+Thumbs.db
+
+# VSCode
+.vscode/
+
+# --- Python package files ---
+*.egg-info/

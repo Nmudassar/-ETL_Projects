@@ -1,0 +1,16 @@
+@startuml
+skinparam dpi 150
+actor Developer as Dev
+
+rectangle "Local Repo\n`data/raw/*.csv`\n`src/extract.py`\n`myenv/`" as Repo
+rectangle "ETL Script\n(pandas, chardet, awswrangler)\nbuilds boto3.Session" as ETL
+database "AWS S3\ns3://<bucket>/raw/\n(versioning, lifecycle)" as S3
+rectangle "Airbyte Cloud\n(S3 source connector)\nScheduled sync" as Airbyte
+rectangle "MotherDuck\nwarehouse\nschema: retail_data" as MDuck
+
+Dev --> Repo : edit/run
+Repo --> ETL : python src/extract.py
+ETL --> S3 : write parquet (wr.s3.to_parquet)
+S3 --> Airbyte : Airbyte polls S3 prefix/raw/
+Airbyte --> MDuck : loads retail_data.sales/products
+@enduml
